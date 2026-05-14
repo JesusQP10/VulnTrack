@@ -1,0 +1,38 @@
+# Ejecutable compilado
+Programs/WebApp.exe
+Programs/WebApp.dbg
+Programs/WebApp.log
+Programs/Config.ws
+
+# Archivos generados por DataFlex
+AppSrc/WebApp.x64.dep
+AppSrc/WebApp.x64.prn
+AppSrc/config/classlist.xml
+Data/*.int
+Data/*.cch
+Data/*.dat
+Data/*.hdr
+Data/*.k1
+Data/*.k2
+Data/*.k3
+Data/*.tag
+Data/Filelist.cfg
+Data/reindex.log
+Data/ODBC_DRV.log
+Data/DFConnId.ini
+
+# IDE y workspace
+*.sws
+IdeSrc/
+DDSrc/DDClassList.xml
+
+# Clave de cifrado — NUNCA subir
+AppSrc/LoginEncryptionKey.inc
+
+# Motor JS de DataFlex — no es código tuyo
+AppHtml/DfEngine/
+AppHtml/CssThemes/
+
+# Archivos de configuración IIS generados
+AppHtml/global.asa
+AppHtml/web.config

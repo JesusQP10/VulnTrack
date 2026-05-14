@@ -1,0 +1,7 @@
+#REPLACE FILE3 servicio
+#REPLACE servicio.File_Number |CI3
+#REPLACE servicio.id |FN3,1
+#REPLACE servicio.activo_id |FN3,2
+#REPLACE servicio.nombre |FS3,3
+#REPLACE servicio.version |FS3,4
+#REPLACE servicio.puerto |FN3,5

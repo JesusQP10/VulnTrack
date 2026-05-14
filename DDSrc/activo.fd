@@ -1,0 +1,7 @@
+#REPLACE FILE1 activo
+#REPLACE activo.File_Number |CI1
+#REPLACE activo.id |FN1,1
+#REPLACE activo.nombre |FS1,2
+#REPLACE activo.ip |FS1,3
+#REPLACE activo.sistema_operativo |FS1,4
+#REPLACE activo.tipo |FS1,5

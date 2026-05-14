@@ -1,0 +1,7 @@
+#REPLACE FILE4 vulnerabilidad
+#REPLACE vulnerabilidad.File_Number |CI4
+#REPLACE vulnerabilidad.id |FN4,1
+#REPLACE vulnerabilidad.servicio_id |FN4,2
+#REPLACE vulnerabilidad.cve_codigo |FS4,3
+#REPLACE vulnerabilidad.descripcion |FS4,4
+#REPLACE vulnerabilidad.severidad |FS4,5
