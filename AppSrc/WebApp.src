@@ -35,6 +35,7 @@ Object oWebApp is a cWebApp
             
             Object oMenuButton is a cWebMenuButton
                 Set piMenuHeight to 500
+                Set piColumnIndex to 0
 
                 Object oDashboard_itm is a cWebMenuItem
                     Set psCaption to C_$Dashboard
@@ -124,6 +125,7 @@ Object oWebApp is a cWebApp
             Set piColumnCount to 12
             Object oCaptionBreadcrumb is a cWebBreadcrumb
                 Set peBreadcrumbStyle to crumbCaption
+                Set piColumnSpan to 10
                 WebSetResponsive peBreadcrumbStyle rmMobile to crumbDropDown
             End_Object         
         End_Object
@@ -142,6 +144,7 @@ Object oWebApp is a cWebApp
         Object oBreadcrumbPanel is a cWebPanel
             Set peRegion to prBottom
             Object oHorizontalBreadcrumb is a cWebBreadcrumb
+                Set piColumnSpan to 1
                 WebSetResponsive pbRender rmMobile to False
             End_Object         
         End_Object

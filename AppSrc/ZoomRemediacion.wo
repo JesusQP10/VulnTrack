@@ -90,7 +90,7 @@ Object oZoomRemediacion is a cWebView
 
         Object oremediacionnotas is a cWebEdit
             Entry_Item remediacion.notas
-            Set piColumnSpan to 0
+            Set piColumnSpan to 12
             Set piColumnIndex to 0
             Set peLabelPosition to lpTop
             Set psLabel to "notas"

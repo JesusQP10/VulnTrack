@@ -26,23 +26,29 @@ Object oLogin is a cWebView
         Set pbFillHeight to True
         Set piColumnSpan to 12
     End_Object
+
+    Object oLogo is a cWebImage
+        Set piColumnSpan to 12
+        Set psUrl to "images/DF_Logo_Retina.png"
+        Set pePosition to wiFit
+        Set piColumnIndex to 0
+        Set piHeight to 160
+        WebSetResponsive piHeight rmMobile to 100
+    End_Object
     
+    Object oSubtitulo is a cWebLabel
+        Set piColumnSpan to 10
+        Set piColumnIndex to 1
+        Set psCaption to "Sistema de Gestión de Vulnerabilidades"
+        Set peAlign to alignCenter
+    End_Object
+
     Object oWarning is a cWebLabel
         Set pbVisible to False
         Set psCaption to "Invalid User ID or password. \n\rHint: 'admin' & 'admin'."
         Set peAlign to alignCenter
         Set piColumnSpan to 12
         Set psCSSClass to "LoginWarning"
-    End_Object
-    
-    Object oLogo is a cWebImage
-        Set piColumnSpan to 10
-        Set psUrl to "images/DF_Logo_Retina.png"
-        Set pePosition to wiFit
-        Set piColumnIndex to 1
-        Set piHeight to 160
-        
-        WebSetResponsive piHeight rmMobile to 100  // Best for small smart phones
     End_Object
     
     Object oLoginName is a cWebForm

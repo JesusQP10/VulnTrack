@@ -50,6 +50,7 @@ Object oDashboard is a cWebView
             Set piColumnCount to 12
             
             Set psCSSClass to "TilesGroup"
+            Set piColumnIndex to 0
     
             Object oWelcomeTile is a cWebHtmlBox
                    Set piColumnSpan to 12

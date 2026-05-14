@@ -85,7 +85,7 @@ Object oZoomVulnerabilidad is a cWebView
             Set piMinHeight to 150
         End_Object 
 
-        Object ovulnerabilidadseveridad is a cWebCombo
+       Object ovulnerabilidadseveridad is a cWebCombo
             Entry_Item vulnerabilidad.severidad
             Set piColumnSpan to 2
             Set piColumnIndex to 0
@@ -93,7 +93,7 @@ Object oZoomVulnerabilidad is a cWebView
             Set psLabel to "severidad"
 
         Procedure OnFill
-            Forward Send OnFill
+        Forward Send OnFill
             Send AddComboItem "Critical" "Critical"
             Send AddComboItem "High"     "High"
             Send AddComboItem "Medium"   "Medium"
