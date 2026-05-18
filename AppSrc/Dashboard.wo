@@ -211,12 +211,12 @@ Object oDashboard is a cWebView
         // 5. Remediación 
         Get CountEstado "Completado" to iRemRes
         Get CountEstado "Pendiente" to iRemPend
-        Get CountEstado "En Proceso" to iRemProc
+        Get CountEstado "En Progreso" to iRemProc
         Get CountEstado "Verificado" to iRemVer
         
         Move ('<div class="WebCon_Sizer" data-ServerOnClick="openview"><div class="Tile_Title">✅ Remediación</div><div class="Tile_Subtitle" style="font-size: 0.9em; line-height: 1.4;">' + ;
               'Resueltas: ' + String(iRemRes) + ' &nbsp;|&nbsp; Pendientes: ' + String(iRemPend) + '<br>' + ;
-              'En Proceso: ' + String(iRemProc) + '| Verificadas: ' + String(iRemVer) + '</div></div>') to sHtml
+              'En Progreso: ' + String(iRemProc) + '| Verificadas: ' + String(iRemVer) + '</div></div>') to sHtml
         WebSet psHtml of oTileRemediacion to sHtml
 
     End_Procedure
