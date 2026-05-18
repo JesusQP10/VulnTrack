@@ -10,7 +10,8 @@ Use cWebForm.pkg
 Use cWebEdit.pkg
 Use SelectServicio.wo
 Use cWebCombo.pkg
-
+Use cHttpTransfer.pkg  
+Use cJsonObject.pkg    
 
 Use cactivoDataDictionary.dd
 Use cservicioDataDictionary.dd
@@ -29,16 +30,42 @@ Object oZoomVulnerabilidad is a cWebView
     End_Object 
 
     Object oservicio_DD is a cservicioDataDictionary
-        Set DDO_Server To oactivo_DD
+        Set DDO_Server to oactivo_DD
     End_Object 
 
     Object ovulnerabilidad_DD is a cvulnerabilidadDataDictionary
-        Set DDO_Server To oservicio_DD
+        Set DDO_Server to oservicio_DD
     End_Object 
 
-    Set Main_DD To ovulnerabilidad_DD
-    Set Server  To ovulnerabilidad_DD
+    Set Main_DD to ovulnerabilidad_DD
+    Set Server  to ovulnerabilidad_DD
 
+    // ---> COMUNICACIONES <---
+    
+    Object oNvdHttp is a cHttpTransfer
+        Set psRemoteHost to "services.nvd.nist.gov"
+        Set piRemotePort to rpHttpSSL 
+        Set peTransferFlags to ifSecure 
+
+        Function ExtraerDatosCVE String sCve Returns Integer
+            Integer bSuccess iStatus
+            String sPath sFilePath
+            
+            Move "/posts/1" to sPath
+            Move "respuesta_prueba.json" to sFilePath
+            
+            
+            Set psSaveAsFile of Self to sFilePath
+            
+            Get HttpGetRequest of Self sPath to bSuccess
+            Get ResponseStatusCode of Self to iStatus
+            
+            Function_Return iStatus
+        End_Function
+    End_Object
+    
+    // -----------------------------------
+   
 
     Object oWebMainPanel is a cWebPanel
         Set piColumnCount to 12
@@ -60,7 +87,6 @@ Object oZoomVulnerabilidad is a cWebView
             Set psLabel to "servicio id"
             Set pbPromptButton to True
 
-// ToDo: Fill in the from-child parent Select view object name for navigate forward
             WebRegisterPath ntNavigateForward oSelectServicio
 
             Procedure OnPrompt
@@ -75,6 +101,37 @@ Object oZoomVulnerabilidad is a cWebView
             Set peLabelPosition to lpTop
             Set psLabel to "cve codigo"
         End_Object 
+
+        // ---> EXTRACCIÓN <---
+        Object oFetchNvdBtn is a cWebButton
+            Set piColumnSpan to 2
+            Set piColumnIndex to 4
+            Set psCaption to "Extraer NVD"
+            Set pbServerOnClick to True
+
+            Procedure OnClick
+                String sCve
+                Boolean bExito
+                
+                WebGet psValue of ovulnerabilidadcve_codigo to sCve
+                
+                Move (Trim(sCve)) to sCve
+                If (sCve = "") Begin
+                    Send ShowInfoBox "Introduce un CVE válido primero." "Alerta"
+                    Procedure_Return
+                End
+                
+                Get ExtraerDatosCVE of oNvdHttp sCve to bExito
+                
+                If (bExito) Begin
+                    Send ShowInfoBox "Datos descargados." "Éxito"
+                End
+                Else Begin
+                    Send ShowInfoBox "Fallo en la comunicación con el NIST." "Error"
+                End
+            End_Procedure
+        End_Object
+        // --------------------------------
 
         Object ovulnerabilidaddescripcion is a cWebEdit
             Entry_Item vulnerabilidad.descripcion
@@ -92,27 +149,24 @@ Object oZoomVulnerabilidad is a cWebView
             Set peLabelPosition to lpTop
             Set psLabel to "severidad"
 
-        Procedure OnFill
-        Forward Send OnFill
-            Send AddComboItem "Critical" "Critical"
-            Send AddComboItem "High"     "High"
-            Send AddComboItem "Medium"   "Medium"
-            Send AddComboItem "Low"      "Low"
-            Send AddComboItem "Info"     "Info"
-        End_Procedure
+            Procedure OnFill
+                Forward Send OnFill
+                Send AddComboItem "Critical" "Critical"
+                Send AddComboItem "High"     "High"
+                Send AddComboItem "Medium"   "Medium"
+                Send AddComboItem "Low"      "Low"
+                Send AddComboItem "Info"     "Info"
+            End_Procedure
         End_Object
     End_Object 
 
     Object oActionGroup is a cWebMenuGroup
-
         Object oSaveBtn is a cWebMenuItem
             Set psCSSClass to "WebSaveMenuItem"
             Set psCaption to "Save"
-
             Procedure OnClick
                 Send Request_Save
             End_Procedure
-
         End_Object 
 
         Object oEditBtn is a cWebMenuItem
@@ -122,18 +176,15 @@ Object oZoomVulnerabilidad is a cWebView
                 Send ChangeEditMode True
                 Send SetActionButtons
             End_Procedure
-
         End_Object 
 
         Object oDeleteBtn is a cWebMenuItem
             Set psCSSClass to "WebDeleteMenuItem"
             Set psCaption to "Delete"
             Set peActionDisplay to adMenu
-
             Procedure OnClick
                 Send Request_Delete
             End_Procedure
-
         End_Object 
 
         Object oCancelChangesBtn is a cWebMenuItem
@@ -143,7 +194,6 @@ Object oZoomVulnerabilidad is a cWebView
             Procedure OnClick
                 Send RefreshRecord
             End_Procedure
-
         End_Object 
     End_Object 
 
@@ -156,7 +206,6 @@ Object oZoomVulnerabilidad is a cWebView
         Get GetNavigateData to NavigateData
         Get HasRecord of hoDD to bHasRecord
 
-        // let's hide all buttons and then Show the ones we want
         WebSet pbRender of oEditBtn to False
         WebSet pbRender of oSaveBtn to False
         WebSet pbRender of oCancelChangesBtn to False
@@ -173,11 +222,9 @@ Object oZoomVulnerabilidad is a cWebView
     End_Procedure
 
     Procedure OnViewSaved Handle hoServer Boolean bChanged
-        // Close after save
         Send NavigateClose Self
     End_Procedure
 
-    // this will close the view after a delete
     Procedure OnViewDeleted Handle hoDDO
         Send NavigateClose Self
     End_Procedure
@@ -185,23 +232,14 @@ Object oZoomVulnerabilidad is a cWebView
     Procedure OnNavigateForward tWebNavigateData NavigateData Integer hoInvokingView Integer hoInvokingObject
         Case Begin
             Case (NavigateData.eNavigateType = nfFromMain)
-                // If from main, this is a propbably a main file Select to Zoom.
                 Case Break
-
             Case (NavigateData.eNavigateType = nfFromParent)
-                // If from parent, this is a constrained drill down.
                 Case Break
-
             Case (NavigateData.eNavigateType = nfFromChild)
-                // If from child, this is a probably a parent Zoom from a Zoom.
                 Case Break
-
-            Case Else // must be nfUndefined
-
+            Case Else 
         Case End
-
         Send SetActionButtons
-
     End_Procedure
 
-End_Object 
+End_Object

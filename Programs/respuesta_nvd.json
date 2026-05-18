@@ -1,0 +1,24 @@
+{
+  "vulnerabilities": [
+    {
+      "cve": {
+        "id": "CVE-2021-44228",
+        "descriptions": [
+          {
+            "lang": "en",
+            "value": "Apache Log4j2 versions 2.0-beta9 to 2.15.0 exclusion of security features are vulnerable to remote code execution when the configuration, log message, or parameters contain a JNDI lookup pattern."
+          }
+        ],
+        "metrics": {
+          "cvssMetricV31": [
+            {
+              "cvssData": {
+                "baseSeverity": "CRITICAL"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
