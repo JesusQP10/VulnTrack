@@ -38,25 +38,8 @@ Registrar activo → Definir servicios → Asociar CVEs → Gestionar remediaci�
 
 ## 🏗️ Arquitectura
 
-```mermaid
-graph TD
-    A["🌐 Navegador"] -->|"HTTP"| B["IIS + DataFlex Web Server"]
-    B --> C["Capa de Aplicación DataFlex 25"]
-    C -->|"ODBC 8.1 64-bit"| D[("MySQL 8.x")]
-    D --> E["activo"]
-    D --> F["servicio"]
-    D --> G["vulnerabilidad"]
-    D --> H["remediacion"]
+<img width="800" height="680" alt="arquitectura-dataflex" src="https://github.com/user-attachments/assets/1567b4ad-7195-4f3e-bf95-4e052090374a" />
 
-    style A fill:#1e293b,stroke:#38bdf8,color:#e2e8f0
-    style B fill:#1e293b,stroke:#38bdf8,color:#e2e8f0
-    style C fill:#1e293b,stroke:#00ff41,color:#e2e8f0
-    style D fill:#0f172a,stroke:#00ff41,color:#00ff41
-    style E fill:#141414,stroke:#333,color:#e2e8f0
-    style F fill:#141414,stroke:#333,color:#e2e8f0
-    style G fill:#141414,stroke:#333,color:#e2e8f0
-    style H fill:#141414,stroke:#333,color:#e2e8f0
-```
 
 ---
 
