@@ -53,36 +53,36 @@ Object oSelectRemediacion is a cWebView
 
         Object oremediacionid is a cWebColumn
             Entry_Item remediacion.id
-            Set psCaption to "remediacion.id"
+            Set psCaption to "ID"
             Set piWidth to 100
         End_Object 
 
         Object ovulnerabilidadid is a cWebColumn
             Entry_Item vulnerabilidad.id
-            Set psCaption to "remediacion.vulnerabilidad_id"
+            Set psCaption to "ID Vullnerabilidad"
             Set piWidth to 100
         End_Object 
 
         Object oremediacionestado is a cWebColumn
             Entry_Item remediacion.estado
-            Set psCaption to "remediacion.estado"
+            Set psCaption to "Estado"
             Set piWidth to 110
         End_Object 
 
         Object oremediacionnotas is a cWebColumn
             Entry_Item remediacion.notas
-            Set psCaption to "remediacion.notas"
+            Set psCaption to "Notas"
             Set piWidth to 163980
         End_Object 
 
         Object oremediacionfecha is a cWebColumn
             Entry_Item remediacion.fecha
-            Set psCaption to "remediacion.fecha"
+            Set psCaption to "Fecha"
             Set piWidth to 100
         End_Object 
 
         Object oDetailButton is a cWebColumnButton
-            Set psCaption to "btn"
+            Set psCaption to ""
             Set piWidth to 45
             Set pbFixedWidth to True
             Set pbResizable to False

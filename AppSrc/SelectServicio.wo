@@ -37,43 +37,44 @@ Object oSelectServicio is a cWebView
         Set psCSSClass to "MobileList"
         Set pbServerOnRowClick to True
         Set pbFillHeight to True
-        Set pbShowHeader to False
+        Set pbShowHeader to True
         Set piSortColumn to 0
         WebRegisterPath ntNavigateForward oZoomServicio
 
         Object oservicioid is a cWebColumn
             Entry_Item servicio.id
-            Set psCaption to "servicio.id"
-            Set piWidth to 100
+            Set psCaption to "ID"
+            Set piWidth to 39
+            Set pbRender to False
         End_Object 
 
         Object oactivoid is a cWebColumn
             Entry_Item activo.id
-            Set psCaption to "servicio.activo_id"
-            Set piWidth to 100
+            Set psCaption to "ID Activo"
+            Set piWidth to 95
         End_Object 
 
         Object oservicionombre is a cWebColumn
             Entry_Item servicio.nombre
-            Set psCaption to "servicio.nombre"
-            Set piWidth to 1000
+            Set psCaption to "Nombre"
+            Set piWidth to 634
         End_Object 
 
         Object oservicioversion is a cWebColumn
             Entry_Item servicio.version
-            Set psCaption to "servicio.version"
-            Set piWidth to 500
+            Set psCaption to "Versión"
+            Set piWidth to 130
         End_Object 
 
         Object oserviciopuerto is a cWebColumn
             Entry_Item servicio.puerto
-            Set psCaption to "servicio.puerto"
-            Set piWidth to 100
+            Set psCaption to "Puerto"
+            Set piWidth to 106
         End_Object 
 
         Object oDetailButton is a cWebColumnButton
-            Set psCaption to "btn"
-            Set piWidth to 45
+            Set psCaption to ""
+            Set piWidth to 93
             Set pbFixedWidth to True
             Set pbResizable to False
             Set piListRowSpan to 1

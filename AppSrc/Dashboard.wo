@@ -1,137 +1,224 @@
 ﻿Use cWebView.pkg
 Use cWebPanel.pkg
-Use cWebForm.pkg
-Use cWebButton.pkg
-Use cWebGroup.pkg
-Use cWebSpacer.pkg
 Use cWebHtmlBox.pkg
-Use cWebMenuGroup.pkg
-Use cWebMenuItem.pkg
-Use cWebLabel.pkg
-Use cWebList.pkg
-Use cWebColumn.pkg
+Use cWebGroup.pkg
+
+Use cactivoDataDictionary.dd
+Use cservicioDataDictionary.dd
+Use cvulnerabilidadDataDictionary.dd
+Use cremediacionDataDictionary.dd
 
 Object oDashboard is a cWebView
 
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
-    // Add a DDO Structure 
-    //
-    // There is no need to synchronize a DD structure on the client so we do
-    // not set the Server property or send ADDOStructure. We will simply use
-    // DDO's to mine data and generate HTML for our cWebHTMLBox objects.
-    // It is the HTML in these objects that is sent to the client each time 
-    // this page is shown.
-    //
-    // Also, it is important for the drill-down Navigation interface that we
-    // do not set the Server property to some DDO because this will affect 
-    // constraints in the next view that we navigate to.
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-
     Set piMaxWidth to 1024
-    
     Set psCaption to "Dashboard"
     Set peViewType to vtUndefined
     Set pbShowCaption to False
+    Set pbServerOnShow to True
     Set psCSSClass to "Dashboard"
-    
+
+    Object oactivo_DD is a cactivoDataDictionary
+    End_Object
+
+    Object oservicio_DD is a cservicioDataDictionary
+        Set DDO_Server to oactivo_DD
+    End_Object
+
+    Object ovulnerabilidad_DD is a cvulnerabilidadDataDictionary
+        Set DDO_Server to oservicio_DD
+    End_Object
+
+    Object oremediacion_DD is a cremediacionDataDictionary
+        Set DDO_Server to ovulnerabilidad_DD
+    End_Object
+
+    Set Main_DD to oactivo_DD
+    Set Server to oactivo_DD
+
     Object oWebMainPanel is a cWebPanel
         Set piColumnCount to 24
-        
-        // - - - - - - - - - - - - - - -
-        // Main Panel's Responsive Rules
-        // - - - - - - - - - - - - - - -
         WebSetResponsive piColumnCount rmMobile to 1
         WebSetResponsive piColumnCount rmTabletPortrait to 16
-    
+
         Object oTiles_grp is a cWebGroup
             Set piColumnSpan to 24
             Set pbShowBorder to False
             Set pbShowCaption to False
             Set piColumnCount to 12
-            
             Set psCSSClass to "TilesGroup"
-            Set piColumnIndex to 0
-    
+
             Object oWelcomeTile is a cWebHtmlBox
-                   Set piColumnSpan to 12
-                   Set psCSSClass to "Tile Light"
-                   Set psHtml to '<div Class="WebCon_Sizer"><div class="Tile_Title">🛡️ VulnTrack</div><div Class="Tile_Subtitle">Sistema de gestión de activos y vulnerabilidades</div></div>'
-    
-                Procedure OnLoad
-                      Send UpdateHTML ('<div class="WebCon_Sizer">' + ;
-                     '<div class="Tile_Title">🛡️ VulnTrack</div>' +;
-                     '<div class="Tile_Subtitle">' - htmlEncode(psUserName(ghoWebSessionManager)) - '</div>' +;
-                     '</div>')
-                End_Procedure
-                
+                Set piColumnSpan to 12
+                Set psCSSClass to "Tile Light"
+                Set psHtml to '<div class="WebCon_Sizer"><div class="Tile_Title">🛡️ VulnTrack</div><div class="Tile_Subtitle">Cargando...</div></div>'
             End_Object
-    
+
             Object oTileActivo is a cWebHtmlBox
                 Set pbServerOnClick to True
                 Set piColumnSpan to 6
-                //Set piColumnIndex to 0
                 Set psCSSClass to "Tile LightAlternate"
-                Set psHtml to '<div class="WebCon_Sizer" data-ServerOnClick="openview"><div class="Tile_Title">🖥️ Activos</div><div class="Tile_Subtitle">Hosts, IPs y dispositivos de red</div></div>'
-                                
-                 WebRegisterPath ntNavigateForwardCustom oSelectActivo
-                
+                Set psHtml to '<div class="WebCon_Sizer" data-ServerOnClick="openview"><div class="Tile_Title">🖥️ Activos</div><div class="Tile_Subtitle">Cargando...</div></div>'
+                WebRegisterPath ntNavigateForwardCustom oSelectActivo
                 Procedure OnClick String sId String sParam
                     Send NavigatePath
                 End_Procedure
-                
             End_Object
-    
+
             Object oTileServicio is a cWebHtmlBox
                 Set pbServerOnClick to True
                 Set piColumnSpan to 6
                 Set piColumnIndex to 6
                 Set psCSSClass to "Tile Dark"
-                Set psHtml to '<div class="WebCon_Sizer" data-ServerOnClick="openview"><div class="Tile_Title">⚙️ Servicios</div><div class="Tile_Subtitle">Servicios y versiones por activo</div></div>'
-    
-                 WebRegisterPath ntNavigateForwardCustom oSelectServicio
-                
+                Set psHtml to '<div class="WebCon_Sizer" data-ServerOnClick="openview"><div class="Tile_Title">⚙️ Servicios</div><div class="Tile_Subtitle">Cargando...</div></div>'
+                WebRegisterPath ntNavigateForwardCustom oSelectServicio
                 Procedure OnClick String sId String sParam
                     Send NavigatePath
                 End_Procedure
-                
             End_Object
-    
+
             Object oTileVulnerabilidad is a cWebHtmlBox
                 Set pbServerOnClick to True
                 Set piColumnSpan to 6
-                //Set piColumnIndex to 0
                 Set psCSSClass to "Tile DarkAlternate"
-                Set psHtml to '<div class="WebCon_Sizer" data-ServerOnClick="openview"><div class="Tile_Title">🔓 Vulnerabilidades</div><div class="Tile_Subtitle">CVEs asociados por severidad</div></div>'
-            
-                 WebRegisterPath ntNavigateForwardCustom oSelectVulnerabilidad
-                
+                Set psHtml to '<div class="WebCon_Sizer" data-ServerOnClick="openview"><div class="Tile_Title">🔓 Vulnerabilidades</div><div class="Tile_Subtitle">Cargando...</div></div>'
+                WebRegisterPath ntNavigateForwardCustom oSelectVulnerabilidad
                 Procedure OnClick String sId String sParam
                     Send NavigatePath
                 End_Procedure
-                
             End_Object
-            
+
             Object oTileRemediacion is a cWebHtmlBox
                 Set pbServerOnClick to True
                 Set piColumnSpan to 6
                 Set piColumnIndex to 6
                 Set psCSSClass to "Tile Light"
-                Set psHtml to '<div class="WebCon_Sizer" data-ServerOnClick="openview"><div class="Tile_Title">✅ Remediación</div><div class="Tile_Subtitle">Estado de parches y correcciones</div></div>'
-                
+                Set psHtml to '<div class="WebCon_Sizer" data-ServerOnClick="openview"><div class="Tile_Title">✅ Remediación</div><div class="Tile_Subtitle">Cargando...</div></div>'
                 WebRegisterPath ntNavigateForwardCustom oSelectRemediacion
-                
                 Procedure OnClick String sId String sParam
-                     Send NavigatePath
+                    Send NavigatePath
                 End_Procedure
-                
             End_Object
+
         End_Object
-        
-    
     End_Object
-    
-    Procedure OnBeforeShow
-        // Each time this view is shown we will update the appropriate information.
+
+    // --- CONTEO ---
+    Function CountActivos Returns Integer
+        Integer iCount
+        Move 0 to iCount
+        Clear activo
+        Find Gt activo by 1
+        While (Found)
+            Increment iCount
+            Find Gt activo by 1
+        Loop
+        Function_Return iCount
+    End_Function
+
+    Function CountServicios Returns Integer
+        Integer iCount
+        Move 0 to iCount
+        Clear servicio
+        Find Gt servicio by 1
+        While (Found)
+            Increment iCount
+            Find Gt servicio by 1
+        Loop
+        Function_Return iCount
+    End_Function
+
+    Function CountVulnerabilidades Returns Integer
+        Integer iCount
+        Move 0 to iCount
+        Clear vulnerabilidad
+        Find Gt vulnerabilidad by 1
+        While (Found)
+            Increment iCount
+            Find Gt vulnerabilidad by 1
+        Loop
+        Function_Return iCount
+    End_Function
+
+   Function CountSeveridad String sSeveridad Returns Integer
+        Integer iCount
+        Move 0 to iCount
+        Clear vulnerabilidad
+        Find Gt vulnerabilidad by 1
+        While (Found)
+            
+            If (Uppercase(Trim(vulnerabilidad.severidad)) = Uppercase(Trim(sSeveridad))) Begin
+                Increment iCount
+            End
+            Find Gt vulnerabilidad by 1
+        Loop
+        Function_Return iCount
+    End_Function
+
+    Function CountEstado String sEstado Returns Integer
+        Integer iCount
+        Move 0 to iCount
+        Clear remediacion
+        Find Gt remediacion by 1
+        While (Found)
+            // Espacios en blanco y capitalización
+            If (Uppercase(Trim(remediacion.estado)) = Uppercase(Trim(sEstado))) Begin
+                Increment iCount
+            End
+            Find Gt remediacion by 1
+        Loop
+        Function_Return iCount
+    End_Function
+
+// --- INYECCIÓN ---
+    Procedure OnShow
+        Forward Send OnShow
+
+        // Variables de despliegue
+        Integer iActivos iServicios
+        Integer iVulnCrit iVulnAlta iVulnMed iVulnBaja iVulnTotal
+        Integer iRemRes iRemPend iRemProc iRemVer
+        String sHtml sUser
+
+        // 1. Bienvenida
+        Get psUserName of ghoWebSessionManager to sUser
+        If (sUser = "") Move "Operador" to sUser
+        Move ('<div class="WebCon_Sizer"><div class="Tile_Title">🛡️ VulnTrack</div><div class="Tile_Subtitle">' + sUser + '</div></div>') to sHtml
+        WebSet psHtml of oWelcomeTile to sHtml
+
+        // 2. Activos
+        Get CountActivos to iActivos
+        Move ('<div class="WebCon_Sizer" data-ServerOnClick="openview"><div class="Tile_Title">🖥️ Activos</div><div class="Tile_Subtitle">' + String(iActivos) + ' registrados</div></div>') to sHtml
+        WebSet psHtml of oTileActivo to sHtml
+
+        // 3. Servicios
+        Get CountServicios to iServicios
+        Move ('<div class="WebCon_Sizer" data-ServerOnClick="openview"><div class="Tile_Title">⚙️ Servicios</div><div class="Tile_Subtitle">' + String(iServicios) + ' monitorizados</div></div>') to sHtml
+        WebSet psHtml of oTileServicio to sHtml
+
+        // 4. Vulnerabilidades 
+        Get CountVulnerabilidades to iVulnTotal
+        Get CountSeveridad "critical" to iVulnCrit
+        Get CountSeveridad "high" to iVulnAlta
+        Get CountSeveridad "medium" to iVulnMed
+        Get CountSeveridad "low" to iVulnBaja
+        
+        
+        Move ('<div class="WebCon_Sizer" data-ServerOnClick="openview"><div class="Tile_Title">🔓 Vulnerabilidades (' + String(iVulnTotal) + ')</div><div class="Tile_Subtitle" style="font-size: 0.9em; line-height: 1.4;">' + ;
+              'Críticas: ' + String(iVulnCrit) + ' &nbsp;|&nbsp; Altas: ' + String(iVulnAlta) + '<br>' + ;
+              'Medias: ' + String(iVulnMed) + ' &nbsp;|&nbsp; Bajas: ' + String(iVulnBaja) + '</div></div>') to sHtml
+        WebSet psHtml of oTileVulnerabilidad to sHtml
+
+        // 5. Remediación 
+        Get CountEstado "Completado" to iRemRes
+        Get CountEstado "Pendiente" to iRemPend
+        Get CountEstado "En Proceso" to iRemProc
+        Get CountEstado "Verificado" to iRemVer
+        
+        Move ('<div class="WebCon_Sizer" data-ServerOnClick="openview"><div class="Tile_Title">✅ Remediación</div><div class="Tile_Subtitle" style="font-size: 0.9em; line-height: 1.4;">' + ;
+              'Resueltas: ' + String(iRemRes) + ' &nbsp;|&nbsp; Pendientes: ' + String(iRemPend) + '<br>' + ;
+              'En Proceso: ' + String(iRemProc) + '| Verificadas: ' + String(iRemVer) + '</div></div>') to sHtml
+        WebSet psHtml of oTileRemediacion to sHtml
+
     End_Procedure
 
 End_Object

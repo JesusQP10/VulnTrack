@@ -42,43 +42,45 @@ Object oSelectVulnerabilidad is a cWebView
         Set psCSSClass to "MobileList"
         Set pbServerOnRowClick to True
         Set pbFillHeight to True
-        Set pbShowHeader to False
+        Set pbShowHeader to True
         Set piSortColumn to 0
         WebRegisterPath ntNavigateForward oZoomVulnerabilidad
 
         Object ovulnerabilidadid is a cWebColumn
             Entry_Item vulnerabilidad.id
-            Set psCaption to "vulnerabilidad.id"
-            Set piWidth to 100
+            Set psCaption to "ID"
+            Set pbRender to False
+            Set piWidth to 0
         End_Object 
 
         Object oservicioid is a cWebColumn
             Entry_Item servicio.id
-            Set psCaption to "vulnerabilidad.servicio_id"
-            Set piWidth to 100
+            Set psCaption to "ID Servicio"
+            Set piWidth to 0
+            Set pbRender to False
         End_Object 
 
         Object ovulnerabilidadcve_codigo is a cWebColumn
             Entry_Item vulnerabilidad.cve_codigo
-            Set psCaption to "vulnerabilidad.cve_codigo"
-            Set piWidth to 200
+            Set psCaption to "CVE"
+            Set piWidth to 0
         End_Object 
 
         Object ovulnerabilidaddescripcion is a cWebColumn
             Entry_Item vulnerabilidad.descripcion
-            Set psCaption to "vulnerabilidad.descripcion"
-            Set piWidth to 163980
+            Set psCaption to "Descripción"
+            Set piWidth to 839
         End_Object 
 
         Object ovulnerabilidadseveridad is a cWebColumn
             Entry_Item vulnerabilidad.severidad
-            Set psCaption to "vulnerabilidad.severidad"
-            Set piWidth to 70
+            Set psCaption to "Severidad"
+            Set piWidth to 330
         End_Object 
 
         Object oDetailButton is a cWebColumnButton
-            Set psCaption to "btn"
-            Set piWidth to 45
+            Set psCaption to ""
+            Set piWidth to 221
             Set pbFixedWidth to True
             Set pbResizable to False
             Set piListRowSpan to 1

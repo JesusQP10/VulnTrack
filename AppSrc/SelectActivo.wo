@@ -32,43 +32,44 @@ Object oSelectActivo is a cWebView
         Set psCSSClass to "MobileList"
         Set pbServerOnRowClick to True
         Set pbFillHeight to True
-        Set pbShowHeader to False
+        Set pbShowHeader to True
         Set piSortColumn to 0
         WebRegisterPath ntNavigateForward oZoomActivo
 
         Object oactivoid is a cWebColumn
             Entry_Item activo.id
-            Set psCaption to "activo.id"
-            Set piWidth to 100
+            Set psCaption to "ID"
+            Set piWidth to 52
+            Set pbRender to False
         End_Object 
 
         Object oactivonombre is a cWebColumn
             Entry_Item activo.nombre
-            Set psCaption to "activo.nombre"
-            Set piWidth to 1000
+            Set psCaption to "Nombre"
+            Set piWidth to 323
         End_Object 
 
         Object oactivoip is a cWebColumn
             Entry_Item activo.ip
-            Set psCaption to "activo.ip"
-            Set piWidth to 450
+            Set psCaption to "IP"
+            Set piWidth to 143
         End_Object 
 
         Object oactivosistema_operativo is a cWebColumn
             Entry_Item activo.sistema_operativo
-            Set psCaption to "activo.sistema_operativo"
-            Set piWidth to 1000
+            Set psCaption to "Sistema Operativo"
+            Set piWidth to 323
         End_Object 
 
         Object oactivotipo is a cWebColumn
             Entry_Item activo.tipo
-            Set psCaption to "activo.tipo"
-            Set piWidth to 500
+            Set psCaption to "Tipo"
+            Set piWidth to 159
         End_Object 
 
         Object oDetailButton is a cWebColumnButton
-            Set psCaption to "btn"
-            Set piWidth to 45
+            Set psCaption to ""
+            Set piWidth to 41
             Set pbFixedWidth to True
             Set pbResizable to False
             Set piListRowSpan to 1
