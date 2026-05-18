@@ -40,13 +40,13 @@ Registrar activo → Definir servicios → Asociar CVEs → Gestionar remediaci�
 
 ```mermaid
 graph TD
-    A[🌐 Navegador] -->|HTTP| B[IIS + DataFlex Web Server]
-    B --> C[Capa de Aplicación DataFlex 25]
-    C -->|ODBC 8.1 64-bit| D[(MySQL 8.x)]
-    D --> E[activo]
-    D --> F[servicio]
-    D --> G[vulnerabilidad]
-    D --> H[Remediacion]
+    A["🌐 Navegador"] -->|"HTTP"| B["IIS + DataFlex Web Server"]
+    B --> C["Capa de Aplicación DataFlex 25"]
+    C -->|"ODBC 8.1 64-bit"| D[("MySQL 8.x")]
+    D --> E["activo"]
+    D --> F["servicio"]
+    D --> G["vulnerabilidad"]
+    D --> H["remediacion"]
 
     style A fill:#1e293b,stroke:#38bdf8,color:#e2e8f0
     style B fill:#1e293b,stroke:#38bdf8,color:#e2e8f0
