@@ -46,7 +46,7 @@ graph TD
     D --> E[activo]
     D --> F[servicio]
     D --> G[vulnerabilidad]
-    D --> H[remediacion]
+    D --> H[Remediacion]
 
     style A fill:#1e293b,stroke:#38bdf8,color:#e2e8f0
     style B fill:#1e293b,stroke:#38bdf8,color:#e2e8f0
