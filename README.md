@@ -102,7 +102,18 @@ Los datos de prueba incluyen **20 CVEs reales** — Log4Shell, ProxyLogon, PwnKi
 
 ## 🗺️ Roadmap
 
-- [ ] Integración con API NVD (NIST) para ingesta automática de CVEs
+- [ ] Integración con API NVD (NIST) para ingesta automática de CVEs:
+  - Configurar: Inicializar el objeto HTTP, apuntarlo al host del NIST y activar HTTPS.
+
+  - Ejecutar la petición pasando la ruta con el CVE.
+
+  - Capturar el JSON de la respuesta.
+
+  - Parsear el JSON en un cJsonObject.
+
+  - Extracción de Datos.
+
+  - Inyección en BBDD.
 - [ ] Control de acceso por roles
 - [ ] Exportación de informes PDF/CSV para auditorías
 - [ ] Importación desde salidas de nmap para poblar activos automáticamente
