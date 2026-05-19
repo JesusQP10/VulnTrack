@@ -48,20 +48,19 @@ Object oZoomVulnerabilidad is a cWebView
         Set peTransferFlags to ifSecure 
 
         Function ExtraerDatosCVE String sCve Returns Integer
-            Integer bSuccess iStatus
-            String sPath sFilePath
-            
-            Move "/posts/1" to sPath
-            Move "respuesta_prueba.json" to sFilePath
-            
-            
-            Set psSaveAsFile of Self to sFilePath
-            
-            Get HttpGetRequest of Self sPath to bSuccess
-            Get ResponseStatusCode of Self to iStatus
-            
-            Function_Return iStatus
-        End_Function
+    Integer bSuccess iStatus
+    String sPath sFilePath
+    
+    Move ("/rest/json/cves/2.0?apiKey=8CE3D2E8-7053-F111-836B-129478FCB64D&cveId=" + sCve) to sPath
+    Move "respuesta_nvd.json" to sFilePath
+    
+    Set psSaveAsFile of Self to sFilePath
+    
+    Get HttpGetRequest of Self sPath to bSuccess
+    Get ResponseStatusCode of Self to iStatus
+    
+    Function_Return iStatus
+End_Function
     End_Object
     
     // -----------------------------------
@@ -110,26 +109,34 @@ Object oZoomVulnerabilidad is a cWebView
             Set pbServerOnClick to True
 
             Procedure OnClick
-                String sCve
-                Boolean bExito
-                
-                WebGet psValue of ovulnerabilidadcve_codigo to sCve
-                
-                Move (Trim(sCve)) to sCve
-                If (sCve = "") Begin
-                    Send ShowInfoBox "Introduce un CVE válido primero." "Alerta"
-                    Procedure_Return
-                End
-                
-                Get ExtraerDatosCVE of oNvdHttp sCve to bExito
-                
-                If (bExito) Begin
-                    Send ShowInfoBox "Datos descargados." "Éxito"
-                End
-                Else Begin
-                    Send ShowInfoBox "Fallo en la comunicación con el NIST." "Error"
-                End
-            End_Procedure
+    
+    String sCve sLine sKey sValue sDesc sSev
+    Integer iPos
+    
+    WebGet psValue of ovulnerabilidadcve_codigo to sCve
+    
+    Direct_Input "C:\DataFlex Projects\VulnTrackApp\nvd_result.txt"
+    Repeat
+        Readln sLine
+        Move (Pos("=", sLine)) to iPos
+        If (iPos > 0) Begin
+            Move (Left(sLine, iPos - 1)) to sKey
+            Move (Right(sLine, Length(sLine) - iPos)) to sValue
+            If (sKey = "descripcion") Move sValue to sDesc
+            If (sKey = "severidad")   Move sValue to sSev
+        End
+    Until (SeqEof)
+    Close_Input
+    
+    If (sDesc <> "") Begin
+        WebSet psValue of ovulnerabilidaddescripcion to sDesc
+        WebSet psValue of ovulnerabilidadseveridad to (Lowercase(sSev))
+        Send ShowInfoBox "Datos cargados desde NVD." "Éxito"
+    End
+    Else Begin
+        Send ShowInfoBox "Ejecuta fetch.bat primero." "Info"
+    End
+End_Procedure
         End_Object
         // --------------------------------
 
