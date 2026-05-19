@@ -109,7 +109,6 @@ End_Function
             Set pbServerOnClick to True
 
             Procedure OnClick
-    
     String sCve sLine sKey sValue sDesc sSev
     Integer iPos
     
@@ -123,21 +122,30 @@ End_Function
             Move (Left(sLine, iPos - 1)) to sKey
             Move (Right(sLine, Length(sLine) - iPos)) to sValue
             If (sKey = "descripcion") Move sValue to sDesc
-            If (sKey = "severidad")   Move sValue to sSev
+            If (sKey = "severidad") Begin
+                Move (Uppercase(Left(sValue, 1)) + Lowercase(Right(sValue, Length(sValue) - 1))) to sSev
+            End
         End
     Until (SeqEof)
     Close_Input
     
-    If (sDesc <> "") Begin
-        WebSet psValue of ovulnerabilidaddescripcion to sDesc
-        WebSet psValue of ovulnerabilidadseveridad to (Lowercase(sSev))
-        Send ShowInfoBox "Datos cargados desde NVD." "Éxito"
+       If (sDesc <> "") Begin
+        // 1. Informar al Data Dictionary del cambio en el campo descripción
+        Set Field_Changed_Value of ovulnerabilidad_DD Field vulnerabilidad.descripcion to sDesc
+        
+        // 2. Informar al Data Dictionary del cambio en el campo severidad
+        Set Field_Changed_Value of ovulnerabilidad_DD Field vulnerabilidad.severidad to sSev
+        
+        // 3. Solicitar el guardado explícitamente al DDO de vulnerabilidad
+        Send Request_Save of ovulnerabilidad_DD
+        
+        Send ShowInfoBox "Datos guardados desde NVD." "Éxito"
     End
     Else Begin
         Send ShowInfoBox "Ejecuta fetch.bat primero." "Info"
     End
-End_Procedure
-        End_Object
+    End_Procedure
+   End_Object
         // --------------------------------
 
         Object ovulnerabilidaddescripcion is a cWebEdit
