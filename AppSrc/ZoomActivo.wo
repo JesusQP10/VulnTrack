@@ -29,6 +29,7 @@ Object oZoomActivo is a cWebView
     Object oWebMainPanel is a cWebPanel
         Set piColumnCount to 12
         WebSetResponsive piColumnCount rmMobile to 4
+         
 
         Object oactivoid is a cWebForm
             Entry_Item activo.id
@@ -80,6 +81,15 @@ Object oZoomActivo is a cWebView
             Procedure OnClick
                 Send Request_Save
             End_Procedure
+            
+            Object oServiciosBtn is a cWebMenuItem
+        Set psCaption to "Ver Servicios"
+        Set psCSSClass to "WebIcon_Search"
+        WebRegisterPath ntNavigateForwardCustom oSelectServicio
+        Procedure OnClick
+            Send NavigatePath
+        End_Procedure
+    End_Object
 
         End_Object 
 
