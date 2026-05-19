@@ -8,18 +8,7 @@ Programs/Config.ws
 AppSrc/WebApp.x64.dep
 AppSrc/WebApp.x64.prn
 AppSrc/config/classlist.xml
-Data/*.int
-Data/*.cch
-Data/*.dat
-Data/*.hdr
-Data/*.k1
-Data/*.k2
-Data/*.k3
-Data/*.tag
-Data/Filelist.cfg
-Data/reindex.log
-Data/ODBC_DRV.log
-Data/DFConnId.ini
+Data/
 
 # IDE y workspace
 *.sws
