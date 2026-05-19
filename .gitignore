@@ -1,8 +1,5 @@
 # Ejecutable compilado
-Programs/WebApp.exe
-Programs/WebApp.dbg
-Programs/WebApp.log
-Programs/Config.ws
+Programs/
 
 # Archivos generados por DataFlex
 AppSrc/WebApp.x64.dep
