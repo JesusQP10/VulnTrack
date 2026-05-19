@@ -7,6 +7,8 @@ Use cWebPanel.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
 Use cWebForm.pkg
+Use SelectServicio.wo
+Use cWebButton.pkg
 
 Use cactivoDataDictionary.dd
 
@@ -72,58 +74,58 @@ Object oZoomActivo is a cWebView
         End_Object 
     End_Object 
 
-    Object oActionGroup is a cWebMenuGroup
+       Object oActionGroup is a cWebMenuGroup
 
         Object oSaveBtn is a cWebMenuItem
             Set psCSSClass to "WebSaveMenuItem"
             Set psCaption to "Save"
-
-            Procedure OnClick
-                Send Request_Save
-            End_Procedure
-            
-            Object oServiciosBtn is a cWebMenuItem
-        Set psCaption to "Ver Servicios"
-        Set psCSSClass to "WebIcon_Search"
-        WebRegisterPath ntNavigateForwardCustom oSelectServicio
         Procedure OnClick
-            Send NavigatePath
+            Send Request_Save
         End_Procedure
-    End_Object
-
-        End_Object 
+        End_Object
 
         Object oEditBtn is a cWebMenuItem
             Set psCSSClass to "WebEditMenuItem"
             Set psCaption to "Edit"
-            Procedure OnClick
+        Procedure OnClick
                 Send ChangeEditMode True
                 Send SetActionButtons
-            End_Procedure
-
-        End_Object 
+        End_Procedure
+        End_Object
 
         Object oDeleteBtn is a cWebMenuItem
             Set psCSSClass to "WebDeleteMenuItem"
             Set psCaption to "Delete"
             Set peActionDisplay to adMenu
-
-            Procedure OnClick
-                Send Request_Delete
-            End_Procedure
-
-        End_Object 
+        Procedure OnClick
+            Send Request_Delete
+        End_Procedure
+        End_Object
 
         Object oCancelChangesBtn is a cWebMenuItem
             Set psCSSClass to "WebIcon_Refresh"
             Set psCaption to "Clear Changes"
             Set peActionDisplay to adMenu
-            Procedure OnClick
-                Send RefreshRecord
-            End_Procedure
+        Procedure OnClick
+            Send RefreshRecord
+        End_Procedure
+        End_Object
 
-        End_Object 
-    End_Object 
+        Object oServiciosBtn is a cWebMenuItem
+            //Set piColumnSpan to 3
+            //Set piColumnIndex to 0
+            Set psCaption to "Ver Servicios"
+            Set psCSSClass to "WebIcon_Print"
+            Set pbServerOnClick to True
+
+            WebRegisterPath ntNavigateForwardCustom oSelectServicio
+
+       Procedure OnClick
+            Send NavigateForward of oSelectServicio Self
+        End_Procedure
+        End_Object
+
+    End_Object
 
     Procedure SetActionButtons
         tWebNavigateData NavigateData
@@ -139,6 +141,7 @@ Object oZoomActivo is a cWebView
         WebSet pbRender of oSaveBtn to False
         WebSet pbRender of oCancelChangesBtn to False
         WebSet pbRender of oDeleteBtn to False
+        WebSet pbRender of oServiciosBtn to True
 
         If (NavigateData.bReadOnly) Begin
             WebSet pbRender of oEditBtn to True

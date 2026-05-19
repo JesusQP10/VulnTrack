@@ -160,8 +160,8 @@ End_Procedure
 
         Case Begin
             Case (NavigateData.eNavigateType = nfFromParent)
-                // If from parent, this is a constrained drill down
-                Case Break
+                Constrain servicio.activo_id eq activo.id
+        Case Break
 
             Case (NavigateData.eNavigateType = nfFromChild)
                 // If from child, this is a probably a parent lookup from a Zoom
